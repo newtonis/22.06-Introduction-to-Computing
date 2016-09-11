@@ -1,0 +1,48 @@
+################################################################################
+#                                                                              #
+#    Micro Series 6801 Assembler V2.00/DOS              11/Sep/16  13:26:25    #
+#                                                                              #
+#       Source   =   ej8.msa                                                   #
+#       List     =   ej8.lst                                                   #
+#       Object   =   ej8.r07                                                   #
+#       Options  =                                                             #
+#                                                                              #
+#                                               (c) Copyright IAR Systems 1990 #
+################################################################################
+
+
+    1  4000           R1_A    EQU     $4000
+    2  4010           R1_B    EQU     $4010
+    3  3000           RTA     EQU     $3000
+    4                 
+    5                 ** iniciamos el programa principal
+    6  0000                   p68H11
+    7  2000                   ORG     $2000
+    8                 ** cargamos valores de testeo
+    9  2000 CE4000            ldx     #R1_A
+   10  2003 C600              ldab    #0
+   11  2005 E700      rtest   stab    0,X
+   12  2007 08                inx
+   13  2008 5C                incb
+   14  2009 8C4010            cpx     #R1_B
+   15  200C 26F7              BNE     rtest
+   16                 
+   17                 ** iniciamos el programa de verdad
+   18                 ** cargamos puntero de lectura inicial, y reseteamos D (individualmente A,B)
+   19  200E CE4000            ldx     #R1_A
+   20  2011 4F                clra
+   21  2012 5F                clrb
+   22  2013 EB00      repite  addb    0,X     ** adicionamos a la suma que estamos calculando el valor del puntero actual
+   23  2015 8900              adca    #0      ** agregamos a A el carry
+   24  2017 08                inx     
+   25  2018 8C4010            cpx     #R1_B
+   26  201B 26F6              bne     repite  ** oh no! Faltan sumar numeros
+   27  201D FD3000            std     RTA     ** almacenamos resultado del problema
+   28                 
+   29  2020 3F                swi
+   30  2021                   end
+
+    Errors:  None           #######
+    Bytes:   33             # ej8 #
+    CRC:     4EEB           #######
+

@@ -1,0 +1,32 @@
+	p68H11  
+
+** configuraciones
+SPOS	EQU	$2070
+OUT	EQU	$2000
+
+** programa principal
+	ORG $2001
+	LDAB	#$0
+	LDX	#SPOS
+	BRA	inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
+
+
+*** incremento longitud del string, y puntero del proximo caracter a leer
+count	INX
+	INCB
+
+
+inicio	LDAA	0,X
+	CMPA	#$0D
+	BNE	count	**si no lei caracter final debo contar un caracter mas, y luego volver a revisar
+
+** cargo el resultado en OUT
+	STAB	OUT 
+	swi
+
+*** Aqui almaceno el string a analizar
+	ORG SPOS
+	FCC 'INTROCOM ES DIVERTIDO'
+	FCB $0D
+
+	END

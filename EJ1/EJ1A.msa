@@ -1,0 +1,12 @@
+* Este programa lee un dato de la memoria IN, 
+* le realiza dos shift y lo vuelve a escribir en OUT            
+IN  EQU $2021 
+OUT EQU $2020
+	p68H11                  
+	ORG     $2000          
+	LDAA IN
+	ASLA
+	ASLA
+	STAA OUT
+	SWI
+	END

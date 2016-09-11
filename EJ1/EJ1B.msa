@@ -1,0 +1,24 @@
+IN EQU $2021
+OUT EQU $2020
+	p68H11
+	ORG $2000
+	ldaa IN
+	ldab #2 * se haran dos iteraciones
+inicio	ASRA 
+	BHS	ncarry * aca decido si voy al sector del codigo que pone en 1 o en 0 el bit mas significativo
+
+** lo que sucede si hay carry
+	ORAA #$80 *si carry=1, debo poner en 1 el mas sigificativo
+	BRA	final
+
+** lo que sucede si no hay carry
+ncarry	ANDA #$7F *si carry=0, debo poner en 0 el mas signficativo
+	BRA	final
+
+final	decb
+	bne	inicio * si todavia me quedan rotados por hacer
+
+	staa OUT
+	swi
+
+	END
