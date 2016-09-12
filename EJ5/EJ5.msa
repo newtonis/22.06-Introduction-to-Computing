@@ -1,11 +1,11 @@
 	p68H11  
 
 ** configuraciones
-SPOS	EQU	$2070
-OUT	EQU	$2000
+SPOS	equ	$2070
+OUT	equ	$2000
 
 ** programa principal
-	ORG	$2001
+	org	$2001
 	ldab	#$0
 	ldx	#SPOS
 	bra	inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
@@ -25,8 +25,8 @@ inicio	ldaa	0,X
 	swi
 
 *** Aqui almaceno el string a anlizar
-	ORG	SPOS
-	FCC	'INTROCOM ES DIVERTIDO'
-	FCB	$0D
+	org	SPOS
+	fcc	'INTROCOM ES DIVERTIDO'
+	fcb	$0D
 
 	END
