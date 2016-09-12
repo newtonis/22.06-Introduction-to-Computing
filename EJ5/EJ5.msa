@@ -5,7 +5,7 @@ SPOS	EQU	$2070
 OUT	EQU	$2000
 
 ** programa principal
-	org	$2001
+	ORG	$2001
 	ldab	#$0
 	ldx	#SPOS
 	bra	inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
