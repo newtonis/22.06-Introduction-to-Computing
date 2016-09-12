@@ -18,7 +18,7 @@
     5  2000           OUT     EQU     $2000
     6                 
     7                 ** programa principal
-    8  2001                   ORG $2001
+    8  2001                   ORG     $2001
     9  2001 C600              LDAB    #$0
    10  2003 CE2070            LDX     #SPOS
    11  2006 2002              BRA     inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
@@ -38,14 +38,14 @@
    25  2013 3F                swi
    26                 
    27                 *** Aqui almaceno el string a anlizar
-   28  2070                   ORG SPOS
-   29  2070 494E5452          FCC 'INTROCOM ES DIVERTIDO'
+   28  2070                   ORG     SPOS
+   29  2070 494E5452          FCC     'INTROCOM ES DIVERTIDO'
        2074 4F434F4D
        2078 20455320
        207C 44495645
        2080 52544944
        2084 4F
-   30  2085 0D                FCB $0D
+   30  2085 0D                FCB     $0D
    31                 
    32  2086                   END
 
