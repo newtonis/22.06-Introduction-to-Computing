@@ -1,17 +1,17 @@
 ** Definimos los rangos a contar e la forma [A,B)
-R1_A	EQU	$1000
-R1_B	EQU	$2000
+R1_A	equ	$1000
+R1_B	equ	$2000
 
-R2_A	EQU	$4000
-R2_B	EQU	$4040
+R2_A	equ	$4000
+R2_B	equ	$4040
 
 ** Memorias donde se almacena la respuesta
-LMEM	EQU	$3001
-HMEM	EQU	$3000
+LMEM	equ	$3001
+HMEM	equ	$3000
 
 ** Programa principal
 	p68H11                  
-	ORG     $2000      
+	org     $2000      
 *cargamos mitad de pares
 	ldab	#0
 	ldx	#$1000
@@ -19,7 +19,7 @@ tstart	stab	0,X
 	incb
 	inx
 	cpx	#$2001
-	BNE	tstart
+	bne	tstart
  
 *cargamos mitad de pares 2
 	ldab	#0
@@ -28,7 +28,7 @@ bstart	stab	0,X
 	incb
 	inx
 	cpx	#$4040
-	BNE	bstart
+	bne	bstart
 
 
 * borramos memorias donde se almacena la respuesta
@@ -49,11 +49,11 @@ inicio	ldaa	0,X
 
 incxl	inx
 	cpx	#R1_B	** revisamos si estamos en R1_B y necesitamos saltear a R2_A
-	BNE	chkfnl	** Si pasamos este checkeo, ahora vamos a revisar si hay que terminar el programa
+	bne	chkfnl	** Si pasamos este checkeo, ahora vamos a revisar si hay que terminar el programa
 	ldx	#R2_A	**Si no lo pasmos, entonces saltamos de R1_B a R2_A
-	BRA	inicio
+	bra	inicio
 chkfnl	cpx	#R2_B	** revisamos si estamos en R2_B, y por ende tenemos que terminar el programa
-	BNE	inicio	** Si no sucede esto podemos volver a empezar
+	bne	inicio	** Si no sucede esto podemos volver a empezar
 	swi
 	
 	END
