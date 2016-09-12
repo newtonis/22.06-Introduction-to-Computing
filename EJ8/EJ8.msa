@@ -1,0 +1,31 @@
+R1_A	equ	$4000
+R1_B	equ	$4010
+RTA	equ	$3000
+
+** iniciamos el programa principal
+	p68H11
+	org	$2000
+** cargamos valores de testeo
+	ldx	#R1_A
+	ldab	#$78
+rtest	stab	0,X
+	inx
+	incb
+	cpx	#R1_B
+	bne	rtest
+
+** iniciamos el programa de verdad
+** cargamos puntero de lectura inicial, y reseteamos D (individualmente A,B)
+	ldx	#R1_A
+	clra
+	clrb
+repite	addb	0,X	** adicionamos a la suma que estamos calculando el valor del puntero actual
+	adca	#0	** agregamos a A el carry
+	inx	
+	cpx	#R1_B
+	bne	repite	** oh no! Faltan sumar numeros
+	std	RTA	** almacenamos resultado del problema
+
+	swi
+
+	END
