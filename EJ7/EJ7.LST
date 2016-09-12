@@ -1,0 +1,77 @@
+################################################################################
+#                                                                              #
+#    Micro Series 6801 Assembler V2.00/DOS              12/Sep/16  13:47:04    #
+#                                                                              #
+#       Source   =   ej7.msa                                                   #
+#       List     =   ej7.lst                                                   #
+#       Object   =   ej7.r07                                                   #
+#       Options  =                                                             #
+#                                                                              #
+#                                               (c) Copyright IAR Systems 1990 #
+################################################################################
+
+
+    1                 ** Definimos los rangos a contar e la forma [A,B)
+    2  1000           R1_A    equ     $1000
+    3  2000           R1_B    equ     $2000
+    4                 
+    5  4000           R2_A    equ     $4000
+    6  4040           R2_B    equ     $4040
+    7                 
+    8                 ** Memorias donde se almacena la respuesta
+    9  3001           LMEM    equ     $3001
+   10  3000           HMEM    equ     $3000
+   11                 
+   12                 ** Programa principal
+   13  0000                   p68H11                  
+   14  2000                   org     $2000      
+   15                 *cargamos mitad de pares
+   16  2000 C600              ldab    #0
+   17  2002 CE1000            ldx     #$1000
+   18  2005 E700      tstart  stab    0,X
+   19  2007 5C                incb
+   20  2008 08                inx
+   21  2009 8C2001            cpx     #$2001
+   22  200C 26F7              bne     tstart
+   23                  
+   24                 *cargamos mitad de pares 2
+   25  200E C600              ldab    #0
+   26  2010 CE4000            ldx     #$4000
+   27  2013 E700      bstart  stab    0,X
+   28  2015 5C                incb
+   29  2016 08                inx
+   30  2017 8C4040            cpx     #$4040
+   31  201A 26F7              bne     bstart
+   32                 
+   33                 
+   34                 * borramos memorias donde se almacena la respuesta
+   35  201C 7F3001            clr     LMEM
+   36  201F 7F3000            clr     HMEM
+   37                 * Cargamos rango de comienzo de lectura
+   38  2022 CE1000            ldx     #R1_A
+   39                 
+   40                 ** Iniciamos a contar
+   41  2025 A600      inicio  ldaa    0,X
+   42  2027 47                asra
+   43  2028 2508              bcs     incxl   ** si hay carry puedo saltear aumentar en uno la respuesta (es impar)
+   44                 
+   45                 ** Como es par, entonces tengo que sumar uno a la respuesta
+   46  202A 7C3001            inc     LMEM    **incremento memoria menos significativa
+   47  202D 2603              bne     incxl   **si no se fue de rango, entonces no necesito incrementar HMEM
+   48  202F 7C3000            inc     HMEM    ** incremento memoria mas significativa
+   49                 
+   50  2032 08        incxl   inx
+   51  2033 8C2000            cpx     #R1_B   ** revisamos si estamos en R1_B y necesitamos saltear a R2_A
+   52  2036 2605              bne     chkfnl  ** Si pasamos este checkeo, ahora vamos a revisar si hay que terminar el programa
+   53  2038 CE4000            ldx     #R2_A   **Si no lo pasmos, entonces saltamos de R1_B a R2_A
+   54  203B 20E8              bra     inicio
+   55  203D 8C4040    chkfnl  cpx     #R2_B   ** revisamos si estamos en R2_B, y por ende tenemos que terminar el programa
+   56  2040 26E3              bne     inicio  ** Si no sucede esto podemos volver a empezar
+   57  2042 3F                swi
+   58                         
+   59  2043                   END
+
+    Errors:  None           #######
+    Bytes:   67             # ej7 #
+    CRC:     E2C6           #######
+

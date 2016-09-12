@@ -13,11 +13,11 @@
 
     1  4000           R1_A    equ     $4000
     2  4010           R1_B    equ     $4010
-    3  3000           RTA     equ     $2000
+    3  3000           RTA     equ     $3000
     4                 
     5                 ** iniciamos el programa principal
     6  0000                   p68H11
-    7  2000                   org     $3000
+    7  2000                   org     $2000
     8                 ** cargamos valores de testeo
     9  2000 CE4000            ldx     #R1_A
    10  2003 C678              ldab    #$78
