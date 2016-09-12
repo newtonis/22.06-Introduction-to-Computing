@@ -5,7 +5,7 @@ SPOS	EQU	$2070
 OUT	EQU	$2000
 
 ** programa principal
-	ORG $2001
+	ORG	$2001
 	LDAB	#$0
 	LDX	#SPOS
 	BRA	inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
@@ -24,9 +24,9 @@ inicio	LDAA	0,X
 	STAB	OUT 
 	swi
 
-*** Aqui almaceno el string a analizar
-	ORG SPOS
-	FCC 'INTROCOM ES DIVERTIDO'
-	FCB $0D
+*** Aqui almaceno el string a anlizar
+	ORG	SPOS
+	FCC	'INTROCOM ES DIVERTIDO'
+	FCB	$0D
 
 	END

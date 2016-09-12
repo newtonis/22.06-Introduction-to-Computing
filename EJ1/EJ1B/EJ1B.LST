@@ -1,0 +1,42 @@
+################################################################################
+#                                                                              #
+#    Micro Series 6801 Assembler V2.00/DOS              09/Sep/16  22:22:49    #
+#                                                                              #
+#       Source   =   ej1b.msa                                                  #
+#       List     =   ej1b.lst                                                  #
+#       Object   =   ej1b.r07                                                  #
+#       Options  =                                                             #
+#                                                                              #
+#                                               (c) Copyright IAR Systems 1990 #
+################################################################################
+
+
+    1  2021           IN EQU $2021
+    2  2020           OUT EQU $2020
+    3  0000                   p68H11
+    4  2000                   ORG $2000
+    5  2000 B62021            ldaa IN
+    6  2003 C602              ldab #2 * se haran dos iteraciones
+    7  2005 47        inicio  ASRA 
+    8  2006 2404              BHS     ncarry * aca decido si voy al sector del codigo que pone en 1 o en 0 el bit mas significativo
+    9                 
+   10                 ** lo que sucede si hay carry
+   11  2008 8A80              ORAA #$80 *si carry=1, debo poner en 1 el mas sigificativo
+   12  200A 2004              BRA     final
+   13                 
+   14                 ** lo que sucede si no hay carry
+   15  200C 847F      ncarry  ANDA #$7F *si carry=0, debo poner en 0 el mas signficativo
+   16  200E 2000              BRA     final
+   17                 
+   18  2010 5A        final   decb
+   19  2011 26F2              bne     inicio * si todavia me quedan rotados por hacer
+   20                 
+   21  2013 B72020            staa OUT
+   22  2016 3F                swi
+   23                 
+   24  2017                   END
+
+    Errors:  None           ########
+    Bytes:   23             # ej1b #
+    CRC:     9C82           ########
+

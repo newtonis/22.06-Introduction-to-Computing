@@ -1,4 +1,4 @@
-* Este programa lee un dato de la memoria IN, 
+* Este programa lee un dato de la variable IN, 
 * le realiza dos shift y lo vuelve a escribir en OUT            
 IN  EQU $2021 
 OUT EQU $2020
@@ -8,5 +8,4 @@ OUT EQU $2020
 	ASLA
 	ASLA
 	STAA OUT
-	SWI
 	END
