@@ -14,27 +14,27 @@
     1  0000                   p68H11  
     2                 
     3                 ** configuraciones
-    4  2070           SPOS    EQU     $2070
-    5  2000           OUT     EQU     $2000
+    4  2070           SPOS    equ     $2070
+    5  2000           OUT     equ     $2000
     6                 
     7                 ** programa principal
-    8  2001                   ORG     $2001
-    9  2001 C600              LDAB    #$0
-   10  2003 CE2070            LDX     #SPOS
-   11  2006 2002              BRA     inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
+    8  2001                   org     $2001
+    9  2001 C600              ldab    #$0
+   10  2003 CE2070            ldx     #SPOS
+   11  2006 2002              bra     inicio **necesito saltear el incremento de la longitud del string en la primera iteracion
    12                 
    13                 
    14                 *** incremento longitud del string, y puntero del proximo caracter a leer
-   15  2008 08        count   INX
-   16  2009 5C                INCB
+   15  2008 08        count   inx
+   16  2009 5C                incb
    17                 
    18                 
-   19  200A A600      inicio  LDAA    0,X
-   20  200C 810D              CMPA    #$0D
-   21  200E 26F8              BNE     count   **si no lei caracter final debo contar un caracter mas, y luego volver a revisar
+   19  200A A600      inicio  ldaa    0,X
+   20  200C 810D              cmpa    #$0D
+   21  200E 26F8              bne     count   **si no lei caracter final debo contar un caracter mas, y luego volver a revisar
    22                 
    23                 ** cargo el resultado en OUT
-   24  2010 F72000            STAB    OUT 
+   24  2010 F72000            stab    OUT 
    25  2013 3F                swi
    26                 
    27                 *** Aqui almaceno el string a anlizar
