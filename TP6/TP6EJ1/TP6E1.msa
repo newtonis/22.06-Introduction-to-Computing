@@ -1,7 +1,7 @@
 	p68h11
 
 STRING	equ	$4000
-OUT	equ	$4001
+OUT	equ	$4100
 
 	org	$5000
 

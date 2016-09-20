@@ -1,6 +1,6 @@
 ################################################################################
 #                                                                              #
-#    Micro Series 6801 Assembler V2.00/DOS              20/Sep/16  08:55:29    #
+#    Micro Series 6801 Assembler V2.00/DOS              20/Sep/16  08:58:45    #
 #                                                                              #
 #       Source   =   tp6e1.msa                                                 #
 #       List     =   tp6e1.lst                                                 #
@@ -14,7 +14,7 @@
     1  0000                   p68h11
     2                 
     3  4000           STRING  equ     $4000
-    4  4001           OUT     equ     $4001
+    4  4100           OUT     equ     $4100
     5                 
     6  5000                   org     $5000
     7                 
@@ -38,7 +38,7 @@
    25                         
    26  2006 BD5000            jsr     strlen          
    27                         
-   28  2009 B74001            staa    OUT
+   28  2009 B74100            staa    OUT
    29                         
    30  200C 3F                swi
    31                 
@@ -60,5 +60,5 @@
 
     Errors:  None          #########
     Bytes:   46            # tp6e1 #
-    CRC:     EDE9          #########
+    CRC:     4ED6          #########
 
