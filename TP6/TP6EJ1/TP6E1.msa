@@ -15,7 +15,6 @@ inicio	ldab	0,X	;cargo en B el actual caracter de string a leer
 	cmpb	#$00	;reviso si llegue al ultimo caracter
 	bne	inicio	;en cuyo caso vuelvo a contar
 	deca		;ajusto longitud de string medida
-	staa	4,X	;guardo resultado del calculo
 
 	rts
 
