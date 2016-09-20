@@ -8,7 +8,7 @@ OUT	equ	$4001
 strlen	equ	*
 
 	ldaa	#$00	;inicio en 0 el contador de la longitud del string
-
+	
 inicio	ldab	0,X	;cargo en B el actual caracter de string a leer
 	inca		;incremento longitud del string en un caracter
 	inx
@@ -22,7 +22,7 @@ inicio	ldab	0,X	;cargo en B el actual caracter de string a leer
 	org 	$2000
 	lds	#stackp
 
-	ldx	#STRING	; cargo puntero al inicio del string	
+	ldx	#STRING	
 	
 	jsr	strlen		
 	
