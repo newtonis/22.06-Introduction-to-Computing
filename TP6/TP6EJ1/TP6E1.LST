@@ -37,7 +37,7 @@
    24  2000 8E5031            lds     #stackp
    25                 
    26  2003 CE4000            ldx     #STRING 
-   27  2006 8600              ldaa    #$00            cargamos cualquier cosa en A para hacer el stack avanzar
+   27  2006 8600              ldaa    #$00 
    28                         
    29  2008 BD5000            jsr     strlen          
    30                         
