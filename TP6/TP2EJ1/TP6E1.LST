@@ -1,0 +1,67 @@
+################################################################################
+#                                                                              #
+#    Micro Series 6801 Assembler V2.00/DOS              16/Sep/16  15:57:58    #
+#                                                                              #
+#       Source   =   tp2e1.msa                                                 #
+#       List     =   tp2e1.lst                                                 #
+#       Object   =   tp2e1.r07                                                 #
+#       Options  =                                                             #
+#                                                                              #
+#                                               (c) Copyright IAR Systems 1990 #
+################################################################################
+
+
+    1  0000                   p68h11
+    2                 
+    3  4000           STRING  equ     $4000
+    4  4001           OUT     equ     $4001
+    5                 
+    6  5000                   org     $5000
+    7  5000           strlen  equ     *
+    8                 
+    9  5000 8600              ldaa    #$00    ;inicio en 0 el contador de la longitud del string
+   10                         
+   11  5002 18CE4000          ldy     #STRING ;cargo puntero con la direccion del string a leer
+   12                 
+   13  5006 18E600    inicio  ldab    0,Y     ;cargo en B el actual caracter de string a leer
+   14  5009 4C                inca            ;incremento longitud del string en un caracter
+   15  500A 1808              iny
+   16  500C C100              cmpb    #$00    ;reviso si llegue al ultimo caracter
+   17  500E 26F6              bne     inicio  ;en cuyo caso vuelvo a contar
+   18  5010 4A                deca            ;ajusto longitud de string medida
+   19  5011 A704              staa    4,X     ;guardo resultado del calculo
+   20                 
+   21  5013 39                rts
+   22                 
+   23  2000                   org     $2000
+   24  2000 8E5031            lds     #stackp
+   25                 
+   26  2003 CE4000            ldx     #STRING 
+   27  2006 8600              ldaa    #$00            cargamos cualquier cosa en A para hacer el stack avanzar
+   28                         
+   29  2008 BD5000            jsr     strlen          
+   30                         
+   31  200B B74001            staa    OUT
+   32                         
+   33  200E 3F                swi
+   34                 
+   35                 
+   36  4000                   org     STRING
+   37  4000 456C2073          fcc     'El stack es muy util'
+       4004 7461636B
+       4008 20657320
+       400C 6D757920
+       4010 7574696C
+   38  4014 00                fcb     $00
+   39                 
+   40  5000                   ORG     $5000
+   41  5000           stack   rmb     50      ;Reservo espacio para el stac
+   42  5031           stackp  equ     *-1
+   43                 
+   44                 
+   45  5032                   END     
+
+    Errors:  None          #########
+    Bytes:   56            # tp2e1 #
+    CRC:     5F47          #########
+

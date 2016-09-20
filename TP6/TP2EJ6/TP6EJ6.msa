@@ -1,0 +1,80 @@
+	p68h11
+
+MAIN_AREA	equ	$2000
+SUB_AREA	equ	$2500
+TEST_AREA	equ	$3000
+STACK_AREA	equ	$3500
+RESULT		equ	$3900
+
+	org	SUB_AREA	
+
+get_aver	equ	*	; subrutina que obtiene promedio de las temperaturas
+
+	tsx			; cargo en x el frame pointer
+	ldy	2,X		; cargo el puntero que dice donde debo empezar a leer (primer parametro)
+
+	ldaa	#$0		; aqui se almacena la cantidad de temperaturas
+	ldx	#$0		; aqui tambien se almacena esa cantidad
+
+inicio	ldab	0,Y		; cargo temperatura
+	cmpb	#$FF
+	beq	fin
+	
+	incb			; la incremento en 1
+	pshb			;aqui cargamos en variables temprables del stack si la temperatura no es la final
+	iny
+	inx
+	inca			; incrementamos cantidad de temperaturas y puntero Y de la posicion a leer
+
+	bra	inicio
+fin
+	
+*ahora procedemos a sumar todas las memorias temporales creadas
+
+	ldy	#$00		; aqui se almacenara la suma
+
+inicio2	pulb			; cargamos memoria a sumar
+	aby			; la sumamos al lo quie hay en el registro B
+	deca			; decrementamos la cantidad de temperaturas leidas (quedan menos)
+	bne	inicio2		; si quedan temepraturas por leer
+
+*ahora procedemos a dividir el contenido de y por la cantidad de temperaturas
+	pshy			; cargamos en stack valores temprales de suma de las temperaturas
+	pula			; y lo metemos en D(A:B) de la formula (h:l) 	
+	pulb
+	
+	idiv			; dividimos la suma por la cantidad de elementos sumados
+
+	tsy			; cargo en y el frame pointer
+	stx	2,Y		; cargo en dos bytes el resultado de la suma (se decidieron utilizar dos bytes)
+
+	rts
+
+
+	org	MAIN_AREA	
+	lds	#stackp
+	ldd	#TEST_AREA
+	pshb
+	psha
+	jsr	get_aver
+	pula
+	pula			; solo nos interesa el primer byte del resultado
+	staa	RESULT		; para revisar si anda
+	swi
+
+
+	org	TEST_AREA
+	fcb	23
+	fcb	43
+	fcb	34
+	fcb	12
+	fcb	23
+	fcb	$FF
+
+
+	org	STACK_AREA
+stack	rmb	50
+stackp	equ	* -1
+
+
+	END

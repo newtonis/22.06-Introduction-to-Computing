@@ -1,0 +1,46 @@
+	p68h11
+
+STRING	equ	$4000
+OUT	equ	$4001
+
+	org	$5000
+
+strlen	equ	*
+
+	ldaa	#$00	;inicio en 0 el contador de la longitud del string
+	
+	ldy	#STRING	;cargo puntero con la direccion del string a leer
+
+inicio	ldab	0,Y	;cargo en B el actual caracter de string a leer
+	inca		;incremento longitud del string en un caracter
+	iny
+	cmpb	#$00	;reviso si llegue al ultimo caracter
+	bne	inicio	;en cuyo caso vuelvo a contar
+	deca		;ajusto longitud de string medida
+	staa	4,X	;guardo resultado del calculo
+
+	rts
+
+	org 	$2000
+	lds	#stackp
+
+	ldx	#STRING	
+	ldaa	#$00		cargamos cualquier cosa en A para hacer el stack avanzar
+	
+	jsr	strlen		
+	
+	staa	OUT
+	
+	swi
+
+
+	org	STRING
+	fcc	'El stack es muy util'
+	fcb	$00
+
+	ORG	$5000
+stack	rmb	50	;Reservo espacio para el stac
+stackp	equ	*-1
+
+
+	END	
